@@ -1,0 +1,40 @@
+<div class="menu-group">
+  <label>VẬN HÀNH KHÁCH SẠN</label>
+
+  <a [routerLink]="['/admin/booking-list']" routerLinkActive="active">
+    <i class="fa-solid fa-calendar-days"></i> Quản lý Đặt phòng
+  </a>
+
+  <a [routerLink]="['/admin/checkin-checkout']" routerLinkActive="active">
+    <i class="fa-solid fa-right-to-bracket"></i> Check-in / Check-out
+  </a>
+
+  <a [routerLink]="['/admin/customers']" routerLinkActive="active">
+    <i class="fa-solid fa-address-book"></i> Danh mục khách hàng
+  </a>
+
+  <a [routerLink]="['/admin/housekeeping']" routerLinkActive="active">
+    <i class="fa-solid fa-broom"></i> Quản lý Buồng phòng
+  </a>
+
+  <a [routerLink]="['/admin/room-list']" [queryParams]="{view: 'grid'}" routerLinkActive="active">
+    <i class="fa-solid fa-table-cells-large"></i> Sơ đồ phòng
+  </a>
+</div>
+
+<div class="menu-group">
+  <label>CẤU HÌNH PHÒNG</label>
+  <a [routerLink]="['/admin/room-type']" routerLinkActive="active">
+    <i class="fa-solid fa-layer-group"></i> Loại phòng & Giá
+  </a>
+  <a [routerLink]="['/admin/room-list']" [queryParams]="{view: 'table'}" routerLinkActive="active">
+    <i class="fa-solid fa-list-check"></i> Quản lý kho phòng
+  </a>
+</div>
+
+<div class="menu-group">
+  <label>DỊCH VỤ & MENU</label>
+  <a [routerLink]="['/admin/service-menu']" routerLinkActive="active">
+    <i class="fa-solid fa-concierge-bell"></i> Quản lý dịch vụ & Giá
+  </a>
+</div>

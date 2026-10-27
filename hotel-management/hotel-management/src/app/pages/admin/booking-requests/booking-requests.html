@@ -1,0 +1,58 @@
+<div class="page-wrapper">
+  <div class="page-header">
+    <h2><i class="fa-solid fa-bell-concierge"></i> Yêu cầu đặt phòng</h2>
+    <p>Danh sách khách đặt phòng online đang chờ xác nhận</p>
+  </div>
+
+  <div *ngIf="loading" class="loader-wrap"><div class="loader"></div></div>
+  <div *ngIf="!loading && bookings.length === 0" class="empty-state">
+    <i class="fa-solid fa-inbox"></i>
+    <p>Không có yêu cầu đặt phòng nào đang chờ</p>
+  </div>
+
+  <div *ngIf="!loading && bookings.length > 0" class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Khách hàng</th>
+          <th>SĐT</th>
+          <th>Phòng</th>
+          <th>Ngày khách đặt</th> 
+          <th>Dự kiến nhận</th>   
+          <th>Dự kiến trả</th>    
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let b of bookings">
+          <td>#{{ b.bookingID }}</td>
+          <td><strong>{{ b.customer?.fullName || '—' }}</strong></td>
+          <td>{{ b.customer?.phoneNumber || '—' }}</td>
+          <td>
+            <span class="room-no">{{ b.room?.roomNumber }}</span>
+            <small class="type-name">{{ b.room?.roomType?.typeName }}</small>
+          </td>
+          
+          <td>{{ b.checkInTime | date: 'HH:mm dd/MM/yyyy' }}</td>
+          
+          <td>{{ b.checkInTime | date: 'dd/MM/yyyy' }} <small class="text-muted">14:00</small></td>
+          
+          <td>
+            <span class="text-danger">{{ b.checkOutTime | date: 'HH:mm' }}</span> 
+            {{ b.checkOutTime | date: 'dd/MM/yyyy' }}
+          </td>
+
+          <td class="action-cell">
+            <button class="btn-confirm" (click)="confirm(b.bookingID)">
+              <i class="fa-solid fa-check"></i> Duyệt
+            </button>
+            <button class="btn-cancel" (click)="cancel(b.bookingID)">
+              <i class="fa-solid fa-xmark"></i> Hủy
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

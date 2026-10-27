@@ -1,0 +1,268 @@
+/* --- TỔNG THỂ --- */
+.housekeeping-container {
+  padding: 25px;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  color: #1e293b; 
+}
+
+/* --- HEADER SECTION --- */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  background: white;
+  padding: 18px 25px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.header-title h2 {
+  margin: 0;
+  color: #1e293b; 
+  font-weight: 800;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-title p {
+  margin: 4px 0 0 0;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+/* NÚT BẤM VÀ ĐIỀU HƯỚNG */
+.header-actions { display: flex; gap: 15px; align-items: center; }
+
+.view-switcher {
+  display: flex;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 14px;
+}
+
+.view-switcher button {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #64748b;
+  background: transparent;
+  transition: 0.3s;
+}
+
+.view-switcher button.active {
+  background: white;
+  color: #1e293b;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background: #1e293b; 
+  color: white;
+  border: none;
+  padding: 11px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.2s;
+}
+
+.btn-primary:hover {
+  background: #334155;
+  transform: translateY(-2px);
+}
+
+/* --- GRID VIEW: CARD PHÒNG (KIỂU ROOMLIST) --- */
+.room-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.room-card {
+  background: white;
+  border-radius: 24px;
+  padding: 22px;
+  border-top: 8px solid #e2e8f0; 
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  min-height: 200px; 
+  display: flex;
+  flex-direction: column;
+}
+
+.room-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+}
+
+/* Đổ màu Border-top theo trạng thái (Map getRoomClass) */
+.room-card.available  { border-top-color: #10b981; }
+.room-card.occupied   { border-top-color: #ef4444; }
+.room-card.inspecting { border-top-color: #f59e0b; }
+.room-card.cleaning   { border-top-color: #facc15; }
+.room-card.reserved   { border-top-color: #3b82f6; }
+
+.room-card-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.room-number {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #1e293b;
+}
+
+.room-type {
+  display: block;
+  font-weight: 700;
+  color: #64748b;
+  font-size: 0.9rem;
+  margin-top: 2px;
+}
+
+.room-status-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-top: 5px;
+  color: #94a3b8;
+}
+
+/* Màu text trạng thái trong Card */
+.available .status-text  { color: #10b981; }
+.occupied .status-text   { color: #ef4444; }
+.inspecting .status-text { color: #f59e0b; }
+.cleaning .status-text   { color: #b45309; }
+
+/* NÚT XÁC NHẬN (NẰM DƯỚI ĐÁY CARD) */
+.room-card-footer {
+  margin-top: auto;
+  padding-top: 15px;
+}
+
+.btn-confirm {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  background: #f1f5f9;
+  color: #1e293b;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-confirm:hover:not(:disabled) {
+  background: #1e293b;
+  color: white;
+}
+
+/* --- TABLE VIEW (STYLE ROOMLIST) --- */
+.room-table-container {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.admin-table { width: 100%; border-collapse: collapse; }
+.admin-table th {
+  padding: 15px;
+  text-align: left;
+  background: #f8fafc;
+  font-size: 0.75rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.admin-table td {
+  padding: 18px 15px;
+  border-bottom: 1px solid #f1f5f9;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.badge {
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: inline-block;
+}
+
+.badge.available  { background: #dcfce7; color: #10b981; }
+.badge.occupied   { background: #fee2e2; color: #ef4444; }
+.badge.inspecting { background: #ffedd5; color: #f59e0b; }
+.badge.cleaning   { background: #fef9c3; color: #b45309; }
+.badge.reserved   { background: #dbeafe; color: #3b82f6; }
+
+/* Nút thao tác nhỏ trong bảng */
+.btn-action-icon {
+  background: white;
+  border: 1.5px solid #e2e8f0;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #1e293b;
+  transition: 0.2s;
+}
+
+.btn-action-icon:hover {
+  border-color: #1e293b;
+  background: #f1f5f9;
+}
+
+/* --- MODAL (NAVY STYLE) --- */
+.modal {
+  position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 9999;
+}
+
+.modal-content {
+  background: white; padding: 40px; border-radius: 30px; width: 100%; max-width: 400px;
+}
+
+.modal-content h3 {
+  margin: 0 0 25px 0; font-size: 1.4rem; font-weight: 900; color: #1e293b; text-align: center;
+}
+
+.form-group label {
+  display: block; font-weight: 800; font-size: 0.8rem; margin-bottom: 8px; color: #64748b; text-transform: uppercase;
+}
+
+.form-group input, .form-group select {
+  width: 100%; padding: 14px; border: 2px solid #f1f5f9; border-radius: 15px; background: #f8fafc; font-weight: 600; outline: none; box-sizing: border-box;
+}
+
+.modal-actions { display: flex; gap: 12px; margin-top: 30px; }
+
+.btn-secondary {
+  flex: 1; background: #f1f5f9; border: none; padding: 15px; border-radius: 15px; font-weight: 800; color: #64748b; cursor: pointer;
+}
+
+.btn-primary-modal {
+  flex: 2; background: #1e293b; color: white; border: none; padding: 15px; border-radius: 15px; font-weight: 800; cursor: pointer;
+  box-shadow: 0 8px 20px rgba(30, 41, 59, 0.2);
+}

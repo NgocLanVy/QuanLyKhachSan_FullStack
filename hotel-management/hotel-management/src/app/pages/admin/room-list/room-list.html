@@ -1,0 +1,138 @@
+<div class="rooms-wrapper">
+  <div class="rooms-header">
+    <div class="header-left">
+      <h3>
+        <i class="fa-solid" [ngClass]="viewMode === 'grid' ? 'fa-table-cells' : 'fa-list-check'"></i>
+        {{ viewMode === 'grid' ? 'SƠ ĐỒ PHÒNG KHÁCH SẠN' : 'QUẢN LÝ PHÒNG' }}
+      </h3>
+      <div class="view-switcher">
+        <button [class.active]="viewMode === 'grid'" (click)="viewMode = 'grid'">
+          <i class="fa-solid fa-th-large"></i> Sơ đồ
+        </button>
+        <button [class.active]="viewMode === 'table'" (click)="viewMode = 'table'">
+          <i class="fa-solid fa-list"></i> Danh sách
+        </button>
+      </div>
+      <button class="btn-add-room" (click)="showAddModal = true">
+        <i class="fa-solid fa-plus"></i> Thêm phòng
+      </button>
+    </div>
+
+    <div class="status-legend" *ngIf="viewMode === 'grid'">
+      <span class="status-item"><i class="dot available"></i> Trống</span>
+      <span class="status-item"><i class="dot occupied"></i> Đang ở</span>
+      <span class="status-item"><i class="dot inspecting"></i> Đang kiểm</span>
+      <span class="status-item"><i class="dot cleaning"></i> Đang dọn</span>
+      <span class="status-item"><i class="dot reserved"></i> Đã đặt</span>
+    </div>
+  </div>
+
+  <div class="rooms-grid" *ngIf="viewMode === 'grid'">
+    <div *ngFor="let room of allRooms" class="room-card" [ngClass]="getRoomClass(room?.roomStatus)">
+
+      <div class="room-top">
+        <span class="room-no">{{ room?.roomNumber }}</span>
+        <div class="top-actions">
+          <i class="fa-solid fa-bed"></i>
+        </div>
+      </div>
+
+      <div class="room-info">
+        <p class="type">{{ room?.roomType?.typeName || 'Chưa phân loại' }}</p>
+        <p class="status-label">
+          {{ room?.roomStatus === 'Available' ? 'Phòng trống' :
+          room?.roomStatus === 'Occupied' ? 'Đang có khách' :
+          room?.roomStatus === 'Inspecting' ? 'Đang kiểm đồ' :
+          room?.roomStatus === 'Cleaning' ? 'Đang dọn dẹp' : 'Khách đã đặt' }}
+        </p>
+      </div>
+
+      <div class="room-actions">
+        <button class="btn-st available-btn" [disabled]="room.roomStatus === 'Available'"
+          (click)="changeStatus(room, 'Available')" title="Sẵn sàng">
+          <i class="fa-solid fa-check"></i>
+        </button>
+
+        <button class="btn-st occupied-btn" [disabled]="room.roomStatus === 'Occupied'"
+          (click)="changeStatus(room, 'Occupied')" title="Ở">
+          <i class="fa-solid fa-user-check"></i>
+        </button>
+
+        <button class="btn-st inspecting-btn" [disabled]="room.roomStatus !== 'Occupied'"
+          (click)="changeStatus(room, 'Inspecting')" style="background-color: #f59e0b; color: white;" title="Kiểm đồ">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+
+        <button class="btn-st cleaning-btn" [disabled]="room.roomStatus === 'Cleaning'"
+          (click)="changeStatus(room, 'Cleaning')" title="Dọn">
+          <i class="fa-solid fa-broom"></i>
+        </button>
+
+        <button class="btn-st reserved-btn" [disabled]="room.roomStatus === 'Reserved'"
+          (click)="changeStatus(room, 'Reserved')" style="background-color: #3b82f6; color: white;" title="Đặt trước">
+          <i class="fa-solid fa-calendar-day"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-container" *ngIf="viewMode === 'table'">
+    <table class="slate-table">
+      <thead>
+        <tr>
+          <th>SỐ PHÒNG</th>
+          <th>LOẠI PHÒNG</th>
+          <th>TRẠNG THÁI</th>
+          <th>GIÁ PHÒNG</th>
+          <th>THAO TÁC</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let room of allRooms">
+          <td><span class="room-tag">{{ room.roomNumber }}</span></td>
+          <td>{{ room.roomType?.typeName }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="room.roomStatus.toLowerCase()">
+              {{ room.roomStatus }}
+            </span>
+          </td>
+          <td>{{ room.roomType?.pricePerNight | number }}đ</td>
+          <td>
+            <button class="btn-edit-tiny" (click)="openEditModal(room)">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+
+            <button class="btn-edit-tiny" style="color: #ef4444;" (click)="deleteRoom(room.roomID)">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal-overlay" *ngIf="showAddModal">
+    <div class="modal-content">
+      <h4>THÊM PHÒNG MỚI</h4>
+      <div class="form-group">
+        <label>Số phòng:</label>
+        <input type="text" [(ngModel)]="newRoom.roomNumber" placeholder="Ví dụ: P105">
+      </div>
+      <div class="form-group">
+        <label>Loại phòng:</label>
+        <select [(ngModel)]="newRoom.roomTypeID">
+          <option [ngValue]="null">-- Chọn loại phòng --</option>
+          <option *ngFor="let type of roomTypes" [value]="type.roomTypeID">
+            {{ type.typeName }}
+          </option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="showAddModal = false">Hủy</button>
+        <button class="btn-save" (click)="saveRoom()" [disabled]="loading">
+          {{ loading ? 'Đang lưu...' : 'Lưu phòng' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+.page-wrapper { padding: 30px; }
+.page-header { margin-bottom: 30px; }
+.page-header h2 { font-size: 22px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+.page-header p  { color: #64748b; margin-top: 6px; }
+
+.extend-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+/* Danh sách bên trái */
+.booking-list { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+.booking-list h4 { font-size: 15px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.count { background: #d4af37; color: white; border-radius: 20px; padding: 2px 10px; font-size: 12px; }
+
+.booking-item {
+  padding: 14px; border-radius: 8px; border: 1px solid #e2e8f0;
+  margin-bottom: 10px; cursor: pointer; transition: .2s;
+}
+.booking-item:hover { border-color: #d4af37; background: #fffbeb; }
+.booking-item.active { border-color: #d4af37; background: #fffbeb; box-shadow: 0 0 0 2px #d4af3740; }
+
+.bi-room   { font-weight: 700; font-size: 15px; color: #1e293b; }
+.bi-guest  { color: #334155; margin-top: 4px; }
+.bi-phone  { color: #64748b; font-size: 13px; }
+.bi-checkout { color: #ef4444; font-size: 13px; margin-top: 6px; display: flex; align-items: center; gap: 6px; }
+
+/* Form bên phải */
+.extend-form {
+  background: white; border-radius: 12px; padding: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.06); height: fit-content;
+}
+.extend-form h4 { font-size: 16px; font-weight: 700; margin-bottom: 20px; }
+
+.info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
+.info-row span { color: #64748b; }
+
+.form-group { margin: 20px 0; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; }
+.date-input { width: 100%; padding: 10px 14px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px; outline: none; }
+.date-input:focus { border-color: #d4af37; }
+
+.btn-extend {
+  width: 100%; padding: 12px; background: #d4af37; color: white;
+  border: none; border-radius: 8px; font-size: 15px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  gap: 8px; transition: .2s;
+}
+.btn-extend:hover:not(:disabled) { background: #b8962d; }
+.btn-extend:disabled { opacity: .6; cursor: not-allowed; }
+
+.extend-form.placeholder {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; min-height: 300px; color: #94a3b8; text-align: center;
+}
+.extend-form.placeholder i { font-size: 48px; margin-bottom: 16px; }
+
+.empty-state { text-align: center; padding: 40px 20px; color: #94a3b8; }
+.empty-state i { font-size: 36px; margin-bottom: 12px; display: block; }
+
+.loader-wrap { display: flex; justify-content: center; padding: 60px; }
+.loader { width: 36px; height: 36px; border: 3px solid #e2e8f0; border-top-color: #d4af37; border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }

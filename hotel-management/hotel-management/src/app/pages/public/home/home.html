@@ -1,0 +1,272 @@
+<section class="hero">
+  <div
+  class="hero-bg"
+  [style.background-image]="
+    'linear-gradient(to bottom, rgba(15, 23, 42, 0.7), rgba(30, 41, 59, 0.5)), url(' + heroImage + ')'
+  "
+  style="
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-size: cover;
+    background-position: center;
+  ">
+</div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <h3>{{ totalRooms || '—' }}</h3>
+      <p>Phòng nghỉ</p>
+    </div>
+
+    <div class="stat">
+      <h3>{{ availableRooms || '—' }}</h3>
+      <p>Còn trống</p>
+    </div>
+
+    <div class="stat">
+      <h3 style="display:flex;align-items:center;gap:4px;">
+        5
+        <i class="fa-solid fa-star" style="font-size:14px;color:#d4af37;"></i>
+      </h3>
+      <p>Xếp hạng</p>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    Scroll <i class="fa-solid fa-chevron-down"></i>
+  </div>
+</section>
+
+<section class="section" id="intro">
+  <div class="container">
+    <div class="intro-grid">
+
+      <div class="intro-text">
+        <h2 class="title">Trải nghiệm nghỉ dưỡng <em>hoàng gia</em></h2>
+
+        <p>Chào mừng bạn đến với Royal Mellow, nơi sự tinh tế và tiện nghi giao thoa.</p>
+
+        <a routerLink="/home/rooms" class="btn-primary" style="margin-top:32px;display:inline-block;">
+          Xem tất cả phòng <i class="fa-solid fa-arrow-right-long"></i>
+        </a>
+      </div>
+
+      <div class="intro-cards">
+        <div class="intro-card">
+          <div class="ic-icon">
+            <i class="fa-solid fa-person-swimming"></i>
+          </div>
+          <h5>Hồ bơi</h5>
+          <p>Ngoài trời 25m, 6:00–22:00</p>
+        </div>
+
+        <div class="intro-card">
+          <div class="ic-icon">
+            <i class="fa-solid fa-utensils"></i>
+          </div>
+          <h5>Nhà hàng</h5>
+          <p>Ẩm thực Á–Âu, 24/7</p>
+        </div>
+
+        <div class="intro-card">
+          <div class="ic-icon">
+            <i class="fa-solid fa-spa"></i>
+          </div>
+          <h5>Spa</h5>
+          <p>Trị liệu cao cấp</p>
+        </div>
+
+        <div class="intro-card">
+          <div class="ic-icon">
+            <i class="fa-solid fa-car-side"></i>
+          </div>
+          <h5>Đưa đón</h5>
+          <p>Xe riêng 24/7</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ĐÃ XÓA PHẦN DANH SÁCH PHÒNG -->
+
+<section class="section" style="padding-top:0;">
+  <div class="container">
+
+    <div style="text-align:center;margin-bottom:40px;">
+      <p class="tag" style="justify-content:center;">Xu hướng</p>
+      <h2 class="title">Loại phòng <em>được yêu thích nhất</em></h2>
+    </div>
+
+    <div class="top-booked-grid">
+
+      <div class="top-card" *ngFor="let type of topBookedTypes; let i = index">
+
+        <div class="rank-badge">
+          #{{ i + 1 }}
+        </div>
+
+        <div class="top-card-content">
+
+          <i [ngClass]="getRoomIcon(type.typeName)" class="top-icon"></i>
+
+          <h3>{{ type.typeName }}</h3>
+
+          <p class="booking-count">
+            {{ type.bookingCount }} lượt đặt
+          </p>
+
+          <p class="top-desc">
+            {{ type.description || 'Không gian nghỉ dưỡng lý tưởng với dịch vụ chuẩn 5 sao.' }}
+          </p>
+
+          <div class="top-price">
+            {{ formatPrice(type.price) }}
+            <span>/đêm</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" id="amenities">
+  <div class="container">
+
+    <div style="text-align:center;margin-bottom:60px;">
+      <p class="tag" style="justify-content:center;">Dịch vụ</p>
+      <h2 class="title">Tiện nghi <em>đẳng cấp</em></h2>
+      <div class="divider" style="margin:20px auto;"></div>
+    </div>
+
+    <div class="amenities-grid">
+
+      <div class="amenity">
+        <div class="am-icon">
+          <i class="fa-solid fa-water-ladder"></i>
+        </div>
+        <h5>Hồ bơi ngoài trời</h5>
+        <p>Hồ bơi vô cực 25m tầng thượng, 6:00–22:00</p>
+      </div>
+
+      <div class="amenity">
+        <div class="am-icon">
+          <i class="fa-solid fa-martini-glass-citrus"></i>
+        </div>
+        <h5>Nhà hàng & Bar</h5>
+        <p>Ẩm thực Á–Âu tinh tế, room service 24/7</p>
+      </div>
+
+      <div class="amenity">
+        <div class="am-icon">
+          <i class="fa-solid fa-leaf"></i>
+        </div>
+        <h5>Spa & Wellness</h5>
+        <p>Trị liệu toàn thân, sauna, massage chuyên nghiệp</p>
+      </div>
+
+      <div class="amenity">
+        <div class="am-icon">
+          <i class="fa-solid fa-dumbbell"></i>
+        </div>
+        <h5>Phòng gym</h5>
+        <p>Thiết bị hiện đại, mở cửa 5:00–23:00</p>
+      </div>
+
+      <div class="amenity">
+        <div class="am-icon">
+          <i class="fa-solid fa-wifi"></i>
+        </div>
+        <h5>WiFi tốc độ cao</h5>
+        <p>Kết nối không giới hạn toàn khu vực</p>
+      </div>
+
+      <div class="amenity">
+        <div class="am-icon">
+          <i class="fa-solid fa-van-shuttle"></i>
+        </div>
+        <h5>Đưa đón sân bay</h5>
+        <p>Xe riêng sang trọng, đặt qua lễ tân 24/7</p>
+      </div>
+
+      <div class="amenity">
+        <div class="am-icon">
+          <i class="fa-solid fa-shirt"></i>
+        </div>
+        <h5>Giặt ủi</h5>
+        <p>Dịch vụ giặt ủi nhanh, trả trong 4 giờ</p>
+      </div>
+
+      <div class="amenity">
+        <div class="am-icon">
+          <i class="fa-solid fa-mug-saucer"></i>
+        </div>
+        <h5>Bữa sáng</h5>
+        <p>Buffet sáng phong phú từ 6:00–10:30</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section section-dark" id="contact">
+  <div class="container">
+
+    <div class="contact-grid">
+
+      <div>
+        <p class="tag">Liên hệ</p>
+
+        <h2 class="title">
+          Chúng tôi<br>
+          luôn <em>sẵn sàng</em>
+        </h2>
+
+        <div class="divider"></div>
+
+        <div class="contact-list">
+
+          <div class="contact-row">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>123 Xô Viết nghệ Tĩnh, Phường LangBiang-Đà Lạt, Lâm Đồng</span>
+          </div>
+
+          <div class="contact-row">
+            <i class="fa-solid fa-phone"></i>
+            <span>+84 28 1234 5678</span>
+          </div>
+
+          <div class="contact-row">
+            <i class="fa-solid fa-envelope"></i>
+            <span>info@ngoclanhotel.vn</span>
+          </div>
+
+          <div class="contact-row">
+            <i class="fa-solid fa-clock"></i>
+            <span>Check-in 14:00 — Check-out 12:00</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="map-placeholder">
+
+        <i class="fa-solid fa-map-location-dot" style="font-size:48px;color:#d4af37;margin-bottom:16px;"></i>
+
+        <p>NgocLan Hotel</p>
+
+        <small>123 Xô Viết nghệ Tĩnh, Phường LangBiang-Đà Lạt, Lâm Đồng</small>
+
+        <a href="#" class="btn-outline" style="margin-top:16px;display:inline-block;">
+          Xem bản đồ <i class="fa-solid fa-up-right-from-square"></i>
+        </a>
+
+      </div>
+
+    </div>
+  </div>
+</section>

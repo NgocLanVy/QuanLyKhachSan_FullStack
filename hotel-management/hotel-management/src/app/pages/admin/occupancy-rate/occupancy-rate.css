@@ -1,0 +1,93 @@
+.occupancy-container {
+    padding: 25px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.subtitle { color: #888; font-size: 0.9rem; margin-top: 5px; }
+
+.filter-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #f8f9fa;
+    padding: 8px 15px;
+    border-radius: 10px;
+}
+
+.date-input { border: 1px solid #ddd; border-radius: 6px; padding: 5px 10px; outline: none; }
+
+.btn-filter {
+    background: #2c3e50;
+    color: white;
+    border: none;
+    padding: 6px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-filter:hover { background: #1a252f; }
+
+.dashboard-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: center;
+}
+
+.chart-wrapper {
+    position: relative;
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+.chart-overlay {
+    position: absolute;
+    top: 55%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.chart-overlay h2 { font-size: 3rem; margin: 0; color: #2c3e50; }
+.chart-overlay span { color: #95a5a6; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+
+.stats-details { display: flex; flex-direction: column; gap: 15px; }
+
+.stat-card {
+    padding: 15px 20px;
+    border-radius: 12px;
+    background: #fcfcfc;
+    border-left: 5px solid #ddd;
+}
+
+.stat-info { display: flex; align-items: center; justify-content: space-between; }
+.dot { width: 10px; height: 10px; border-radius: 50%; margin-right: 15px; }
+
+.occupied { border-left-color: #ff4d4d; }
+.occupied .dot { background: #ff4d4d; }
+
+.available { border-left-color: #2ecc71; }
+.available .dot { background: #2ecc71; }
+
+.cleaning { border-left-color: #f1c40f; }
+.cleaning .dot { background: #f1c40f; }
+
+.reserved { border-left-color: #3498db; }
+.reserved .dot { background: #3498db; }
+
+.total-summary {
+    margin-top: 10px;
+    padding-top: 15px;
+    border-top: 1px dashed #ddd;
+    text-align: right;
+    color: #7f8c8d;
+}

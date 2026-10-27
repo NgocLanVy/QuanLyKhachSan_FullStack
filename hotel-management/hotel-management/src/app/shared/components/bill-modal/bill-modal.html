@@ -1,0 +1,68 @@
+<div class="modal-overlay">
+  <div class="modal-content bill-modal">
+    <div class="bill-body-wrapper">
+      <div class="bill-paper" id="print-section">
+        <div class="bill-header">
+          <h2>HÓA ĐƠN THANH TOÁN</h2>
+          <p>Mã đơn: #{{ processedData?.bookingId }}</p>
+        </div>
+
+        <div class="bill-info">
+          <div class="info-row">
+            <p><strong>Khách hàng:</strong> {{ processedData?.customerName }}</p>
+            <p><strong>CCCD/Passport:</strong> {{ processedData?.customer?.identityCard || processedData?.identityCard || 'N/A' }}</p>
+          </div>
+
+          <div class="info-row">
+            <p><strong>Số phòng:</strong> <span class="room-highlight">{{ processedData?.roomNumber || processedData?.room?.roomNumber }}</span></p>
+            <p><strong>Loại phòng:</strong> {{ processedData?.roomTypeName || processedData?.room?.roomType?.typeName || 'Tiêu chuẩn' }}</p>
+          </div>
+
+          <div class="info-row">
+            <p><strong>Ngày nhận:</strong> {{ processedData?.checkInTime | date:'dd/MM/yyyy HH:mm' }}</p>
+            <p><strong>Ngày trả:</strong> {{ (processedData?.checkOutTime || 'Hiện tại') | date:'dd/MM/yyyy HH:mm' }}</p>
+          </div>
+        </div>
+
+        <table class="bill-table">
+          <thead>
+            <tr>
+              <th>Nội dung</th>
+              <th class="text-center">SL</th>
+              <th class="text-right">Thành tiền</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Tiền phòng ({{ processedData?.roomTypeName || processedData?.room?.roomType?.typeName || 'Tiêu chuẩn' }})</td>
+              <td class="text-center">1</td>
+              <td class="text-right">{{ (processedData?.totalRoomPrice || processedData?.roomPrice || 0) | number }}đ</td>
+            </tr>
+            
+            <tr *ngFor="let s of processedData?.processedServices">
+              <td>{{ s.serviceName }}</td> 
+              <td class="text-center">{{ s.quantity }}</td>
+              <td class="text-right">{{ s.total | number }}đ</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr class="total-row">
+              <td colspan="2">TỔNG CỘNG</td>
+              <td class="text-right">{{ processedData?.grandTotal | number }}đ</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+
+    <div class="modal-footer no-print">
+      <button class="btn-secondary" (click)="close.emit()">ĐÓNG</button>
+      <button class="btn-print" (click)="printBill()">
+        <i class="fa-solid fa-print"></i> IN BILL
+      </button>
+      <button class="btn-checkout" (click)="confirmCheckout.emit(processedData?.bookingId)">
+        <i class="fa-solid fa-check"></i> XÁC NHẬN THANH TOÁN
+      </button>
+    </div>
+  </div>
+</div>

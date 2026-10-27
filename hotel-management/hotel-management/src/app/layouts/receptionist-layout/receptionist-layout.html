@@ -1,0 +1,59 @@
+<div class="admin-container"> <aside class="sidebar receptionist-theme">
+    <div class="sidebar-header">
+      <h3 class="logo"><i class="fa-solid fa-bell-concierge"></i> RECEPTIONIST</h3>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="menu-group">
+        <label>NGHIỆP VỤ LỄ TÂN</label>
+        
+        <a [routerLink]="['/receptionist/room-plan']" routerLinkActive="active">
+          <i class="fa-solid fa-table-cells-large"></i> Sơ đồ phòng
+        </a>
+
+        <a [routerLink]="['/receptionist/booking-list']" routerLinkActive="active">
+          <i class="fa-solid fa-calendar-check"></i> Tiếp nhận đặt phòng
+        </a>
+
+        <a [routerLink]="['/receptionist/checkin-checkout']" routerLinkActive="active">
+          <i class="fa-solid fa-right-to-bracket"></i> Check-in / Check-out
+        </a>
+      </div>
+
+      <div class="menu-group">
+        <label>KHÁCH HÀNG & DỊCH VỤ</label>
+        
+        <a [routerLink]="['/receptionist/customers']" routerLinkActive="active">
+          <i class="fa-solid fa-address-book"></i> Danh bạ khách hàng
+        </a>
+
+        <a [routerLink]="['/receptionist/service-menu']" routerLinkActive="active">
+          <i class="fa-solid fa-utensils"></i> Menu Dịch vụ
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button (click)="logout()" class="btn-logout">
+        <i class="fa-solid fa-power-off"></i> Đăng xuất
+      </button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="top-bar">
+      <div class="header-left">
+        <span class="welcome-text">Xin chào, <strong>{{ fullName }}</strong>!</span>
+      </div>
+      <div class="user-profile">
+        <div class="avatar-circle">
+          {{ (fullName || 'R').charAt(0).toUpperCase() }}
+        </div>
+      </div>
+    </header>
+
+    <section class="page-body">
+      <router-outlet></router-outlet> 
+    </section>
+  </main>
+</div>

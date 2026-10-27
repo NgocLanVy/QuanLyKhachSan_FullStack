@@ -1,0 +1,141 @@
+<div class="admin-container">
+  <aside class="sidebar admin-theme">
+    <div class="sidebar-header">
+      <h3 class="logo">
+        <i class="fa-solid fa-user-shield"></i> ADMIN PANEL
+      </h3>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="menu-group">
+        <label>HỆ THỐNG</label>
+        <a routerLink="/admin/dashboard" routerLinkActive="active">
+          <i class="fa-solid fa-gauge-high"></i>
+          Tổng quan hệ thống
+        </a>
+      </div>
+      <div class="menu-group">
+        <label>VẬN HÀNH KHÁCH SẠN</label>
+        <a routerLink="/admin/booking-list" routerLinkActive="active">
+          <i class="fa-solid fa-calendar-days"></i>
+          Quản lý Đặt phòng
+        </a>
+        <a routerLink="/admin/booking-requests" routerLinkActive="active">
+          <i class="fa-solid fa-bell-concierge"></i>
+          Yêu cầu đặt phòng
+          <span class="badge-count" *ngIf="pendingCount > 0">
+            {{ pendingCount }}
+          </span>
+        </a>
+        <a routerLink="/admin/checkin-checkout" routerLinkActive="active">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          Check-in / Check-out
+        </a>
+        <a routerLink="/admin/extend-stay" routerLinkActive="active">
+          <i class="fa-solid fa-calendar-plus"></i>
+          Gia hạn phòng
+        </a>
+        <a routerLink="/admin/housekeeping" routerLinkActive="active">
+          <i class="fa-solid fa-broom"></i>
+          Quản lý Buồng phòng
+        </a>
+        <a
+          routerLink="/admin/room-list"
+          [queryParams]="{ view: 'grid' }"
+          routerLinkActive="active"
+        >
+          <i class="fa-solid fa-table-cells-large"></i>
+          Sơ đồ phòng
+        </a>
+      </div>
+      <div class="menu-group">
+        <label>CẤU HÌNH PHÒNG</label>
+        <a routerLink="/admin/room-type" routerLinkActive="active">
+          <i class="fa-solid fa-layer-group"></i>
+          Loại phòng & Giá
+        </a>
+        <a
+          routerLink="/admin/room-list"
+          [queryParams]="{ view: 'table' }"
+          routerLinkActive="active"
+        >
+          <i class="fa-solid fa-list-check"></i>
+          Quản lý phòng
+        </a>
+      </div>
+      <div class="menu-group">
+        <label>DỊCH VỤ & KHÁCH HÀNG</label>
+        <a routerLink="/admin/service-menu" routerLinkActive="active">
+          <i class="fa-solid fa-utensils"></i>
+          Menu Dịch vụ & Giá
+        </a>
+        <a routerLink="/admin/customers" routerLinkActive="active">
+          <i class="fa-solid fa-address-book"></i>
+          Danh mục khách hàng
+        </a>
+      </div>
+      <div class="menu-group">
+        <label>BÁO CÁO & THỐNG KÊ</label>
+        <a routerLink="/admin/report-revenue" routerLinkActive="active">
+          <i class="fa-solid fa-chart-line"></i>
+          Báo cáo doanh thu
+        </a>
+        <a routerLink="/admin/occupancy-rate" routerLinkActive="active">
+          <i class="fa-solid fa-chart-pie"></i>
+          Thống kê lấp đầy
+        </a>
+        <!--
+        <a routerLink="/admin/activity-log" routerLinkActive="active">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          Nhật ký hoạt động
+        </a>
+        -->
+      </div>
+
+      <div class="menu-group">
+        <label>QUẢN TRỊ NHÂN VIÊN</label>
+        <a
+          [routerLink]="['/admin/user-management']"
+          routerLinkActive="active"
+        >
+          <i class="fa-solid fa-user-gear"></i>
+          Quản lý nhân sự
+        </a>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <button (click)="logout()" class="btn-logout">
+        <i class="fa-solid fa-power-off"></i>
+        Đăng xuất Admin
+      </button>
+    </div>
+  </aside>
+  <main class="main-content">
+    <header class="top-bar">
+      <div class="header-left">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="text"
+            placeholder="Tìm kiếm nhật ký, doanh thu..."
+          />
+        </div>
+      </div>
+      <div class="user-profile admin-profile">
+        <div class="avatar-circle admin-avatar">
+          {{ (currentUser.userName || 'A').charAt(0).toUpperCase() }}
+        </div>
+        <div class="user-info-text">
+          <span class="uname">
+            {{ currentUser.userName }}
+          </span>
+          <span class="urole">
+            {{ currentUser.role }}
+          </span>
+        </div>
+      </div>
+    </header>
+    <section class="page-body">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+</div>

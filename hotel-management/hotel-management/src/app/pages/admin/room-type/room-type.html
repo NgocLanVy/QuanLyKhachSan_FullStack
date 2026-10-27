@@ -1,0 +1,69 @@
+<div class="housekeeping-container">
+  <header class="page-header">
+    <div class="header-title">
+      <h2><i class="fa-solid fa-tags"></i> CẤU HÌNH LOẠI PHÒNG & GIÁ</h2>
+      <p>Thiết lập đơn giá theo đêm và theo giờ cho từng loại phòng</p>
+    </div>
+    <button class="btn-primary" (click)="openAddModal()">
+      <i class="fa-solid fa-plus"></i> Thêm loại phòng
+    </button>
+  </header>
+
+  <div class="room-table-container">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Tên loại phòng</th>
+          <th>Giá theo đêm</th>
+          <th>Giá theo giờ</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let type of roomTypes">
+          <td><strong>{{ type.typeName }}</strong></td>
+          <td style="color: #e67e22; font-weight: 800;">
+            {{ type.pricePerNight | number:'1.0-0' }} ₫
+          </td>
+          <td style="color: #27ae60; font-weight: 700;">
+            {{ type.pricePerHour | number:'1.0-0' }} ₫
+          </td>
+          <td>
+            <button class="btn-action-icon" (click)="editType(type)" title="Chỉnh sửa">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button class="btn-action-icon" style="color: #ef4444;" (click)="deleteType(type.roomTypeID)" title="Xóa">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal" *ngIf="showTypeModal">
+  <div class="modal-content">
+    <h3>{{ isEdit ? 'Cập nhật' : 'Thêm' }} Loại Phòng</h3>
+    
+    <div class="form-group">
+      <label>Tên loại phòng</label>
+      <input type="text" [(ngModel)]="currentType.typeName" placeholder="VD: Phòng VIP">
+    </div>
+
+    <div class="form-group">
+      <label>Giá theo đêm (VND)</label>
+      <input type="number" [(ngModel)]="currentType.pricePerNight" placeholder="VD: 500000">
+    </div>
+
+    <div class="form-group">
+      <label>Giá theo giờ (VND)</label>
+      <input type="number" [(ngModel)]="currentType.pricePerHour" placeholder="VD: 80000">
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-secondary" (click)="showTypeModal = false">Hủy</button>
+      <button class="btn-primary-modal" (click)="saveType()">Lưu thay đổi</button>
+    </div>
+  </div>
+</div>

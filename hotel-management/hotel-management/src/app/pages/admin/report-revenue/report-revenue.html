@@ -1,0 +1,55 @@
+<div class="revenue-page">
+  <div class="report-header">
+    <h2><i class="fa-solid fa-chart-line"></i> BÁO CÁO DOANH THU</h2>
+    
+    <div class="filter-controls">
+      <input type="date" [(ngModel)]="startDate">
+      <i class="fa-solid fa-arrow-right"></i>
+      <input type="date" [(ngModel)]="endDate">
+      <button (click)="fetchReport()"><i class="fa-solid fa-magnifying-glass"></i> Lọc</button>
+    </div>
+  </div>
+
+  <div class="summary-grid">
+    <div class="summary-card gold">
+      <div class="card-icon"><i class="fa-solid fa-coins"></i></div>
+      <div class="card-info">
+        <span>TỔNG DOANH THU</span>
+        <h3>{{ totalRevenue | number }} <small>VNĐ</small></h3>
+      </div>
+    </div>
+
+    <div class="summary-card blue">
+      <div class="card-icon"><i class="fa-solid fa-receipt"></i></div>
+      <div class="card-info">
+        <span>TỔNG ĐƠN HÀNG</span>
+        <h3>{{ totalOrders }} <small>Đơn</small></h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="modern-table">
+      <thead>
+        <tr>
+          <th>NGÀY</th>
+          <th>SỐ ĐƠN</th>
+          <th>DOANH THU</th>
+          <th>TRẠNG THÁI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of revenueData">
+          <td>{{ item.date | date: 'dd/MM/yyyy' }}</td>
+          <td><span class="order-tag">{{ item.orderCount }}</span></td>
+          <td class="amount-cell">{{ item.totalAmount | number }} VNĐ</td>
+          <td>
+            <span class="status-badge" [class.zero]="item.totalAmount === 0">
+              {{ item.totalAmount > 0 ? 'Có doanh thu' : 'Chưa thanh toán' }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

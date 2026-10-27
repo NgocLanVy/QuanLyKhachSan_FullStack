@@ -1,0 +1,84 @@
+<div class="customer-page-container">
+  <div class="list-section">
+    <div class="list-header">
+      <div class="header-left">
+        <h3><i class="fa-solid fa-users"></i> DANH SÁCH KHÁCH HÀNG</h3>
+        <button class="btn-add-new" (click)="openPopup()">
+          <i class="fa-solid fa-plus"></i> Thêm khách hàng
+        </button>
+      </div>
+      
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" [(ngModel)]="searchText" (input)="applyFilter()" placeholder="Tìm tên, SĐT, CCCD...">
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th (click)="toggleSort()" class="sortable-header">
+              Họ và Tên 
+              <i class="fa-solid" [ngClass]="isAsc ? 'fa-sort-up' : 'fa-sort-down'"></i>
+            </th>
+            <th>CCCD</th>
+            <th>Số điện thoại</th>
+            <th style="text-align: center;">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of filteredCustomers; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td><strong>{{ item.fullName }}</strong></td>
+            <td>{{ item.identityCard }}</td>
+            <td>{{ item.phoneNumber }}</td>
+            <td class="action-buttons">
+              <button class="btn-edit-link" (click)="editCustomer(item)">
+                <i class="fa-solid fa-user-pen"></i> Sửa
+              </button>
+              <button class="btn-delete-red" (click)="deleteCustomer(item.customerID)">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="filteredCustomers.length === 0">
+            <td colspan="5" class="empty-msg">Không tìm thấy khách hàng nào.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="showPopup">
+    <div class="modal-content" [class.edit-mode]="isEditMode">
+      <span class="close-btn" (click)="closePopup()">&times;</span>
+      <h3>
+        <i class="fa-solid" [ngClass]="isEditMode ? 'fa-user-pen' : 'fa-user-plus'"></i> 
+        {{ isEditMode ? 'CHỈNH SỬA KHÁCH HÀNG' : 'THÊM KHÁCH HÀNG' }}
+      </h3>
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>Họ và tên</label>
+          <input type="text" [(ngModel)]="newCustomer.fullName" name="fullName" placeholder="Nguyễn Văn A" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Số điện thoại</label>
+            <input type="text" [(ngModel)]="newCustomer.phoneNumber" name="phoneNumber" placeholder="0905..." required>
+          </div>
+          <div class="form-group">
+            <label>Số CCCD</label>
+            <input type="text" [(ngModel)]="newCustomer.identityCard" name="identityCard" placeholder="068..." required>
+          </div>
+        </div>
+        <div class="button-group">
+          <button type="submit" class="btn-save" [style.background]="isEditMode ? '#f39c12' : '#1e293b'">
+            {{ isEditMode ? 'Xác nhận cập nhật' : 'Lưu khách hàng' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

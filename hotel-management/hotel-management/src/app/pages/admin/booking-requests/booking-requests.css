@@ -1,0 +1,32 @@
+.page-wrapper { padding: 30px; }
+
+.page-header { margin-bottom: 30px; }
+.page-header h2 { font-size: 22px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+.page-header p  { color: #64748b; margin-top: 6px; }
+
+.table-wrap { overflow-x: auto; background: white; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+
+.data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.data-table thead { background: #f8fafc; }
+.data-table th { padding: 14px 16px; text-align: left; font-weight: 600; color: #475569; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
+.data-table td { padding: 14px 16px; border-bottom: 1px solid #f1f5f9; color: #334155; }
+.data-table tbody tr:hover { background: #f8fafc; }
+
+.action-cell { display: flex; gap: 8px; }
+
+.btn-confirm, .btn-cancel {
+  padding: 6px 14px; border-radius: 6px; font-size: 13px;
+  font-weight: 600; border: none; cursor: pointer;
+  display: flex; align-items: center; gap: 6px; transition: .2s;
+}
+.btn-confirm { background: #10b981; color: white; }
+.btn-confirm:hover { background: #059669; }
+.btn-cancel  { background: #ef4444; color: white; }
+.btn-cancel:hover  { background: #dc2626; }
+
+.empty-state { text-align: center; padding: 80px 20px; color: #94a3b8; }
+.empty-state i { font-size: 48px; margin-bottom: 16px; display: block; }
+
+.loader-wrap { display: flex; justify-content: center; padding: 60px; }
+.loader { width: 36px; height: 36px; border: 3px solid #e2e8f0; border-top-color: #d4af37; border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }

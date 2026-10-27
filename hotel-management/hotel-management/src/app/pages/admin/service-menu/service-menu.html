@@ -1,0 +1,77 @@
+<div class="service-container">
+    <div class="header">
+        <div class="header-left">
+            <h3><i class="fa-solid fa-bell-concierge"></i> QUẢN LÝ DỊCH VỤ</h3>
+            <button class="btn-add-new" (click)="openPopup()">
+                <i class="fa-solid fa-plus"></i> Thêm dịch vụ
+            </button>
+        </div>
+
+        <div class="search-bar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" [(ngModel)]="searchText" (input)="applyFilter()" placeholder="Tìm tên dịch vụ...">
+        </div>
+    </div>
+
+    <div class="service-grid">
+        <div class="service-card" *ngFor="let item of filteredServices">
+            <div class="service-icon-box">
+                <i class="fa-solid fa-bottle-water" *ngIf="item.serviceName.includes('Nước')"></i>
+                <i class="fa-solid fa-shirt" *ngIf="item.serviceName.includes('Giặt')"></i>
+                <i class="fa-solid fa-motorcycle" *ngIf="item.serviceName.includes('xe')"></i>
+                <i class="fa-solid fa-utensils" *ngIf="item.serviceName.includes('Ăn')"></i>
+                <i class="fa-solid fa-broom" *ngIf="item.serviceName.includes('dọn')"></i>
+                <i class="fa-solid fa-plane-up" *ngIf="item.serviceName.includes('sân bay')"></i>
+                <i class="fa-solid fa-beer-mug-empty" *ngIf="item.serviceName.includes('Bia')"></i>
+                <i class="fa-solid fa-car" *ngIf="item.serviceName.includes('ô tô')"></i>
+                <i class="fa-solid fa-hot-tub-person" *ngIf="item.serviceName.includes('Massage')"></i>
+                <i class="fa-solid fa-gift" *ngIf="item.serviceName.includes('Trang trí')"></i>
+                <i class="fa-solid fa-bowl-food" *ngIf="item.serviceName.includes('Mì')"></i>
+                <i class="fa-solid fa-bottle-water" *ngIf="item.serviceName.includes('Coca Cola')"></i>
+                <i class="fa-solid fa-bottle-water" *ngIf="item.serviceName.includes('Pepsi')"></i>
+            </div>
+
+            <div class="service-details">
+                <h4>{{ item.serviceName }}</h4>
+                <p class="price">{{ item.price | number }} <span>VNĐ</span></p>
+                <p class="unit">Đơn vị: {{ item.unit }}</p>
+            </div>
+
+            <div class="card-actions">
+                <button class="btn-edit" (click)="openPopup(item)"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn-delete" (click)="deleteService(item.serviceID)"><i
+                        class="fa-solid fa-trash"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" *ngIf="showPopup">
+        <div class="modal-content" [class.edit-mode]="isEditMode">
+            <span class="close-btn" (click)="showPopup = false">&times;</span>
+            <h3>
+                <i class="fa-solid" [ngClass]="isEditMode ? 'fa-pen-to-square' : 'fa-plus-circle'"></i>
+                {{ isEditMode ? 'CHỈNH SỬA DỊCH VỤ' : 'THÊM DỊCH VỤ MỚI' }}
+            </h3>
+
+            <div class="form-group">
+                <label>Tên dịch vụ</label>
+                <input type="text" [(ngModel)]="selectedService.serviceName" placeholder="VD: Coca Cola...">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Giá tiền (VNĐ)</label>
+                    <input type="number" [(ngModel)]="selectedService.price">
+                </div>
+                <div class="form-group">
+                    <label>Đơn vị tính</label>
+                    <input type="text" [(ngModel)]="selectedService.unit" placeholder="Chai, Lon, Kg...">
+                </div>
+            </div>
+
+            <button class="btn-save" (click)="saveService()">
+                {{ isEditMode ? 'Xác nhận cập nhật' : 'Lưu dịch vụ' }}
+            </button>
+        </div>
+    </div>
+</div>

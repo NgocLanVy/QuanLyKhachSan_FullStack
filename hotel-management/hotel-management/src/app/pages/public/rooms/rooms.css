@@ -1,0 +1,124 @@
+.rooms-container {
+  padding: 120px 5% 60px;
+  background-color: #0f172a;
+  min-height: 100vh;
+  color: white;
+}
+
+.rooms-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+.room-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.room-card:hover {
+  transform: translateY(-10px);
+}
+
+.room-img-wrapper {
+  position: relative;
+  height: 240px;
+}
+
+.room-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.room-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.room-badge.available { background: #10b981; } 
+.room-badge.occupied { background: #ef4444; } 
+
+.room-content {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.room-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #d4af37;
+  margin-bottom: 10px;
+}
+
+.room-title {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.room-desc {
+  font-size: 14px;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.room-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price-val {
+  font-size: 20px;
+  font-weight: bold;
+  color: #d4af37;
+}
+
+.action-btns {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-info, .btn-book {
+  padding: 8px 15px;
+  border-radius: 6px;
+  font-size: 13px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-info {
+  border: 1px solid #d4af37;
+  color: #d4af37;
+}
+
+.btn-book {
+  background: #d4af37;
+  color: white;
+}
+
+.btn-book:hover { background: #b8962d; }

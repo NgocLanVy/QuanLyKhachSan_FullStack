@@ -1,0 +1,66 @@
+<div class="detail-wrapper" *ngIf="!loading && room">
+    <div class="container">
+        <a routerLink="/home/rooms" class="btn-back">
+            <i class="fa-solid fa-arrow-left"></i> Quay lại danh sách
+        </a>
+
+        <div class="detail-grid">
+            <div class="detail-image">
+                <div class="image-container">
+                    <img [src]="room.imageUrl" [alt]="room.roomNumber">
+                    <span class="status-badge" [ngClass]="room.roomStatus.toLowerCase()">
+                        {{ room.roomStatus === 'Available' ? 'Phòng trống' : 'Đã đặt' }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="detail-info">
+                <p class="room-category">{{ room.roomType.typeName }}</p>
+                <h1 class="room-name">Phòng {{ room.roomNumber }}</h1>
+
+                <div class="price-tag">
+                    <span class="amount">{{ formatPrice(room.roomType.pricePerNight) }}</span>
+                    <span class="per-night">/đêm</span>
+                </div>
+
+                <div class="quick-specs">
+                    <div class="spec-item">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Tối đa {{ room.maxGuests }} khách</span>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fa-solid fa-bed"></i>
+                        <span>Giường {{ room.bedType }}</span>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Dịch vụ cao cấp 24/7</span>
+                    </div>
+                </div>
+
+                <div class="description-section">
+                    <h5>Mô tả chi tiết</h5>
+                    <p>{{ room.description || 'Tận hưởng không gian nghỉ dưỡng sang trọng với nội thất hiện đại và dịch
+                        vụ chuẩn 5 sao.' }}</p>
+                </div>
+
+                <div class="amenities-icons">
+                    <h5>Tiện nghi đi kèm</h5>
+                    <div class="icons-grid">
+                        <span><i class="fa-solid fa-wifi"></i> WiFi</span>
+                        <span><i class="fa-solid fa-snowflake"></i> Điều hòa</span>
+                        <span><i class="fa-solid fa-tv"></i> Smart TV</span>
+                        <span><i class="fa-solid fa-mug-hot"></i> Coffee</span>
+                    </div>
+                </div>
+
+                <div class="action-card">
+                    <a [routerLink]="room.roomStatus === 'Available' ? ['/home/booking', room.roomID] : null"
+                        class="btn-book-now" [class.disabled]="room.roomStatus !== 'Available'">
+                        {{ room.roomStatus === 'Available' ? 'ĐẶT PHÒNG NGAY' : 'PHÒNG ĐÃ ĐƯỢC ĐẶT' }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

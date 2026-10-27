@@ -1,0 +1,65 @@
+<div class="occupancy-container">
+  <div class="header-section">
+    <div class="title-group">
+      <h3><i class="fa-solid fa-chart-pie"></i> THỐNG KÊ LẤP ĐẦY</h3>
+      <p class="subtitle">Cập nhật lúc: {{ today | date: 'HH:mm - dd/MM/yyyy' }}</p>
+    </div>
+
+    <div class="filter-box">
+      <input type="date" [(ngModel)]="startDate" class="date-input">
+      <span class="sep">→</span>
+      <input type="date" [(ngModel)]="endDate" class="date-input">
+      <button class="btn-filter" (click)="loadStats()">
+        <i class="fa-solid fa-rotate"></i> Lọc
+      </button>
+    </div>
+  </div>
+
+  <div class="dashboard-content">
+    <div class="chart-wrapper">
+      <canvas #pieChart></canvas>
+      <div class="chart-overlay">
+        <h2>{{ occupancyPercent }}%</h2>
+        <span>Công suất</span>
+      </div>
+    </div>
+
+    <div class="stats-details">
+      <div class="stat-card occupied">
+        <div class="stat-info">
+          <span class="dot"></span>
+          <label>Đang ở (Occupied)</label>
+          <strong>{{ stats.occupiedRooms }}</strong>
+        </div>
+      </div>
+
+      <div class="stat-card available">
+        <div class="stat-info">
+          <span class="dot"></span>
+          <label>Phòng trống (Available)</label>
+          <strong>{{ stats.availableRooms }}</strong>
+        </div>
+      </div>
+
+      <div class="stat-card cleaning">
+        <div class="stat-info">
+          <span class="dot"></span>
+          <label>Đang dọn (Cleaning)</label>
+          <strong>{{ stats.cleaningRooms }}</strong>
+        </div>
+      </div>
+
+      <div class="stat-card reserved">
+        <div class="stat-info">
+          <span class="dot"></span>
+          <label>Đặt trước (Reserved)</label>
+          <strong>{{ stats.reservedRooms }}</strong>
+        </div>
+      </div>
+
+      <div class="total-summary">
+        <span>Tổng số phòng hệ thống: <strong>{{ stats.totalRooms }}</strong></span>
+      </div>
+    </div>
+  </div>
+</div>

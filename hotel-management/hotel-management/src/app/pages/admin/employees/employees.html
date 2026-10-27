@@ -1,0 +1,110 @@
+<div class="employees-wrapper">
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner"></div>
+    <p>Đang xử lý dữ liệu...</p>
+  </div>
+
+  <div class="header-action">
+    <h3><i class="fa-solid fa-user-tie"></i> QUẢN LÝ NHÂN VIÊN</h3>
+    
+    <button class="btn-add" (click)="openModal()" [disabled]="isLoading">
+      <i class="fa-solid" [ngClass]="isLoading ? 'fa-spinner fa-spin' : 'fa-plus'"></i>
+      {{ isLoading ? ' Đang xử lý...' : 'Thêm mới' }}
+    </button>
+  </div>
+
+  <table class="emp-table" [class.loading]="isLoading">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Họ tên</th>
+        <th>Chức vụ</th>
+        <th>Trạng thái</th>
+        <th>SĐT</th>
+        <th>Thao tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="listEmployees.length === 0 && !isLoading">
+        <td colspan="6" style="text-align: center; padding: 30px; color: #64748b;">
+          Chưa có nhân viên nào trong danh sách.
+        </td>
+      </tr>
+
+      <tr *ngFor="let emp of listEmployees">
+        <td>#{{emp.usersId}}</td>
+        <td><strong>{{emp.fullName}}</strong></td>
+        <td><span class="role-tag">{{emp.roles}}</span></td>
+        <td>
+          <span class="status-badge" [ngClass]="{
+            'status-working': emp.status === 'Đang trong ca',
+            'status-off': emp.status === 'Hết ca',
+            'status-leave': emp.status === 'Nghỉ phép',
+            'status-busy': emp.status === 'Tạm nghỉ'
+          }">
+            <i class="fa-solid fa-circle" style="font-size: 8px; margin-right: 5px;"></i>
+            {{emp.status || 'Ngoại tuyến'}}
+          </span>
+        </td>
+        <td>{{emp.phoneNumber}}</td>
+        <td class="actions">
+          <button class="btn-edit" (click)="openModal(emp)" title="Sửa" [disabled]="isLoading">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+          <button class="btn-delete" (click)="deleteEmployee(emp.usersId)" title="Xóa" [disabled]="isLoading">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="modal-overlay" *ngIf="showModal" (click)="showModal = false">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h4>{{ isEdit ? 'CẬP NHẬT NHÂN VIÊN' : 'THÊM NHÂN VIÊN MỚI' }}</h4>
+      </div>
+      
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Họ và tên</label>
+          <input [(ngModel)]="currentEmp.fullName" placeholder="Nhập họ tên...">
+        </div>
+        
+        <div class="form-group">
+          <label>Tên đăng nhập</label>
+          <input [(ngModel)]="currentEmp.userName" [disabled]="isEdit" placeholder="Tên tài khoản...">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Chức vụ</label>
+            <select [(ngModel)]="currentEmp.roles">
+              <option *ngFor="let r of roleList" [value]="r">{{r}}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Trạng thái</label>
+            <select [(ngModel)]="currentEmp.status">
+              <option *ngFor="let s of statusList" [value]="s">{{s}}</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Số điện thoại</label>
+          <input [(ngModel)]="currentEmp.phoneNumber" placeholder="0xxx...">
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="showModal = false" [disabled]="isLoading">Hủy bỏ</button>
+        <button class="btn-save" (click)="saveEmployee()" [disabled]="isLoading">
+          <i class="fa-solid" [ngClass]="isLoading ? 'fa-spinner fa-spin' : 'fa-check'"></i>
+          {{ isLoading ? ' Đang lưu...' : 'Xác nhận' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="rooms-container">
+    <header class="rooms-header">
+        <h1 class="title">Không gian <em>Nghỉ dưỡng</em></h1>
+        <p>Khám phá bộ sưu tập phòng nghỉ sang trọng tại Royal Mellow</p>
+    </header>
+
+    <div *ngIf="loading" class="loader-container">
+        <div class="loader"></div>
+    </div>
+
+    <div class="rooms-grid" *ngIf="!loading">
+        <div class="room-card" *ngFor="let room of allRooms">
+            <div class="room-img-wrapper">
+                <img [src]="room.imageUrl" alt="Phòng {{room.roomNumber}}">
+                <div class="room-badge" [ngClass]="room.roomStatus.toLowerCase()">
+                    {{ room.roomStatus === 'Available' ? 'Còn trống' : 'Đã đặt' }}
+                </div>
+            </div>
+
+            <div class="room-content">
+                <div class="room-meta">
+                    <span class="type">{{ room.roomType.typeName }}</span>
+                    <span class="capacity"><i class="fa-solid fa-users"></i> {{ room.maxGuests }} khách</span>
+                </div>
+
+                <h3 class="room-title">Phòng {{ room.roomNumber }}</h3>
+                <p class="room-desc">{{ room.description || 'Không gian tinh tế với đầy đủ tiện nghi đẳng cấp.' }}</p>
+
+                <div class="room-footer">
+                    <div class="price-box">
+                        <span class="price-val">{{ formatPrice(room.roomType.pricePerNight) }}</span>
+                        <span class="unit">/đêm</span>
+                    </div>
+                    <div class="action-btns">
+                        <a [routerLink]="['/home/rooms', room.roomID]" class="btn-info">Chi tiết</a>
+                        <a *ngIf="room.roomStatus === 'Available'" [routerLink]="['/home/booking', room.roomID]"
+                            class="btn-book">Đặt ngay</a>
+                        <span *ngIf="room.roomStatus !== 'Available'" class="btn-book disabled">Không khả dụng</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

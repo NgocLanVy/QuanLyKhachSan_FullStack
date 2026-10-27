@@ -1,0 +1,90 @@
+<nav class="nav" id="navbar" [class.scrolled]="scrolled">
+  <div class="nav-inner">
+    <a routerLink="/home" class="logo">
+      <span class="logo-main">ROYAL</span>
+      <span class="logo-sub">NgocLan Hotel</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a routerLink="/home">Trang chủ</a></li>
+      <li><a routerLink="/home/rooms">Phòng nghỉ</a></li>
+      <li><a href="#amenities">Tiện nghi</a></li>
+      <li><a href="#contact">Liên hệ</a></li>
+      
+      <li><a routerLink="/home/rooms" class="btn-booking">Đặt phòng</a></li>
+      
+      <li><a routerLink="/login" class="btn-staff">Nhân viên</a></li>
+    </ul>
+
+    <button class="hamburger" (click)="toggleMenu()" [class.open]="menuOpen">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="mobile-menu" [class.open]="menuOpen">
+    <a routerLink="/home" (click)="closeMenu()">Trang chủ</a>
+    <a routerLink="/home/rooms" (click)="closeMenu()">Phòng nghỉ</a>
+    
+    <a routerLink="/home/rooms" (click)="closeMenu()" class="btn-booking-mobile">Đặt phòng ngay</a>
+    
+    <a href="#amenities" (click)="closeMenu()">Tiện nghi</a>
+    <a href="#contact" (click)="closeMenu()">Liên hệ</a>
+    <a routerLink="/login" (click)="closeMenu()" class="btn-staff-mobile">Nhân viên đăng nhập</a>
+  </div>
+</nav>
+
+<main>
+  <router-outlet />
+</main>
+
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <div class="logo">
+          <span class="logo-main">ROYAL</span>
+          <span class="logo-sub">NgocLan Hotel</span>
+        </div>
+        <p class="footer-desc">
+          Khách sạn 5 sao tại trung tâm TP.Đà Lạt. Nơi mỗi khoảnh khắc đều trở thành kỷ niệm đáng nhớ.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h6>Khám phá</h6>
+        <ul>
+          <li><a routerLink="/home">Trang chủ</a></li>
+          <li><a routerLink="/home/rooms">Phòng nghỉ</a></li>
+          <li><a href="#amenities">Tiện nghi</a></li>
+          <li><a href="#contact">Liên hệ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h6>Chính sách</h6>
+        <ul>
+          <li><a href="#">Đặt phòng</a></li>
+          <li><a href="#">Hủy phòng</a></li>
+          <li><a href="#">Bảo mật</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h6>Giờ giấc</h6>
+        <ul>
+          <li><span>Check-in: 14:00</span></li>
+          <li><span>Check-out: 12:00</span></li>
+          <li><span>Lễ tân: 24/7</span></li>
+        </ul>
+        <a routerLink="/login" class="btn-staff-footer">Cổng nhân viên →</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Royal NgocLan Hotel. All rights reserved.</p>
+      <p>Thiết kế: NgocLanVy</p>
+    </div>
+  </div>
+</footer>

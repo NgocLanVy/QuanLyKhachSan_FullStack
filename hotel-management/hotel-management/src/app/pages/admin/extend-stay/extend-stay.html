@@ -1,0 +1,60 @@
+<div class="page-wrapper">
+  <div class="page-header">
+    <h2><i class="fa-solid fa-calendar-plus"></i> Gia hạn phòng</h2>
+    <p>Chọn booking đang check-in để gia hạn thời gian lưu trú</p>
+  </div>
+
+  <div *ngIf="loading" class="loader-wrap"><div class="loader"></div></div>
+
+  <div *ngIf="!loading" class="extend-layout">
+
+    <!-- Danh sách booking đang ở -->
+    <div class="booking-list">
+      <h4>Phòng đang có khách <span class="count">{{ bookings.length }}</span></h4>
+      <div *ngIf="bookings.length === 0" class="empty-state">
+        <i class="fa-solid fa-bed"></i><p>Không có phòng nào đang có khách</p>
+      </div>
+      <div class="booking-item"
+           *ngFor="let b of bookings"
+           [class.active]="selected?.bookingID === b.bookingID"
+           (click)="selectBooking(b)">
+        <div class="bi-room">Phòng {{ b.room?.roomNumber }}</div>
+        <div class="bi-guest">{{ b.customer?.fullName }}</div>
+        <div class="bi-phone">{{ b.customer?.phoneNumber }}</div>
+        <div class="bi-checkout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          {{ formatDate(b.checkOutTime) || 'Chưa xác định' }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Form gia hạn -->
+    <div class="extend-form" *ngIf="selected">
+      <h4>Gia hạn — Phòng {{ selected.room?.roomNumber }}</h4>
+
+      <div class="info-row"><span>Khách:</span><strong>{{ selected.customer?.fullName }}</strong></div>
+      <div class="info-row"><span>Check-in:</span><strong>{{ formatDate(selected.checkInTime) }}</strong></div>
+      <div class="info-row"><span>Check-out hiện tại:</span><strong>{{ formatDate(selected.checkOutTime) || '—' }}</strong></div>
+      <div class="info-row"><span>Loại phòng:</span><strong>{{ selected.room?.roomType?.typeName }}</strong></div>
+
+      <div class="form-group">
+        <label>Ngày check-out mới</label>
+        <input type="datetime-local"
+               [(ngModel)]="newCheckOut"
+               [min]="minDate"
+               class="date-input">
+      </div>
+
+      <button class="btn-extend" (click)="submitExtend()" [disabled]="submitting">
+        <i class="fa-solid fa-rotate-right"></i>
+        {{ submitting ? 'Đang xử lý...' : 'Xác nhận gia hạn' }}
+      </button>
+    </div>
+
+    <div class="extend-form placeholder" *ngIf="!selected">
+      <i class="fa-solid fa-hand-pointer"></i>
+      <p>Chọn một phòng bên trái để gia hạn</p>
+    </div>
+
+  </div>
+</div>

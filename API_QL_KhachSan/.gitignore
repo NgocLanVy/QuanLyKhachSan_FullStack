@@ -1,0 +1,34 @@
+# --- .NET / C# ---
+bin/
+obj/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
+
+# NuGet Packages
+**/packages/*
+*.nupkg
+
+# ASP.NET Core publish output
+**/Publish/
+*/*/Publish/
+
+# --- Node.js / Angular (nếu project có front-end Angular riêng) ---
+node_modules/
+dist/
+.angular/
+*.log
+
+# --- Hệ điều hành ---
+# Windows thumbnail cache
+Thumbs.db
+ehthumbs.db
+
+# macOS
+.DS_Store
+
+# Môi trường / Cấu hình cá nhân nhạy cảm (Tùy chọn)
+appsettings.Development.json
+appsettings.Local.json

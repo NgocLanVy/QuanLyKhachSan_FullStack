@@ -1,0 +1,132 @@
+<!--<div class="dashboard-content">
+  <div class="welcome-section" style="margin-bottom: 20px;">
+    <h2>Chào mừng trở lại, {{ currentUser.userName }}!</h2>
+  </div>
+
+  <div class="grid-row-1">
+    <div class="card stat-card">
+      <div class="icon-circle">
+        <i class="fa-solid fa-users icon-blue"></i>
+      </div>
+      <div class="stat-info">
+        <h3>{{ tongKhachHang | number:'1.0-0' }}</h3>
+        <span>Tổng khách hàng</span>
+      </div>
+    </div>
+
+    <div class="card stat-card">
+      <div class="icon-circle">
+        <i class="fa-solid fa-box-archive icon-gray"></i>
+      </div>
+      <div class="stat-info">
+        <h3>{{ tongDonDatPhong | number:'1.0-0' }}</h3>
+        <span>Đơn đặt phòng</span>
+      </div>
+    </div>
+
+    <div class="card pie-card">
+      <h4><i class="fa-solid fa-house-circle-check"></i> Tình trạng phòng</h4>
+      <div class="chart-box-pie">
+        <canvas baseChart 
+                [data]="pieChartData" 
+                [type]="'pie'" 
+                [options]="pieChartOptions">
+        </canvas>
+      </div>
+      <div class="status-legend-dashboard">
+        <span class="status-item"><i class="dot available"></i> Trống</span>
+        <span class="status-item"><i class="dot occupied"></i> Đang ở</span>
+        <span class="status-item"><i class="dot cleaning"></i> Đang dọn</span>
+        <span class="status-item"><i class="dot reserved"></i> Đã đặt</span>
+        <span class="status-item"><i class="dot inspecting" style="background: #f59e0b;"></i> Đang kiểm</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="charts-grid">
+    <div class="card chart-card">
+      <h4>Lượt check-in tuần này</h4>
+      <div class="chart-box-main">
+        <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'"></canvas>
+      </div>
+    </div>
+
+    <div class="card chart-card">
+      <h4>Xu hướng doanh thu tuần này</h4>
+      <div class="chart-box-main">
+        <canvas baseChart [data]="lineChartData" [options]="barChartOptions" [type]="'line'"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+
+<div class="dashboard-content">
+  <div class="welcome-section" style="margin-bottom: 20px;">
+    <h2>Chào mừng trở lại, {{ currentUser.userName }}!</h2>
+  </div>
+
+  <div class="grid-row-1" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px;">
+    <div class="card stat-card">
+      <i class="fa-solid fa-users icon-blue"></i>
+      <div class="stat-info">
+        <h3>{{ tongKhachHang | number }}</h3>
+        <span>Khách hàng</span>
+      </div>
+    </div>
+
+    <div class="card stat-card">
+      <i class="fa-solid fa-calendar-check icon-gray"></i>
+      <div class="stat-info">
+        <h3>{{ tongDonDatPhong | number }}</h3>
+        <span>Đơn đặt phòng</span>
+      </div>
+    </div>
+
+    <div class="card stat-card">
+      <i class="fa-solid fa-bell-concierge" style="color: #f59e0b;"></i>
+      <div class="stat-info">
+        <h3>{{ tongDichVu | number }}</h3>
+        <span>Dịch vụ</span>
+      </div>
+    </div>
+
+    <div class="card stat-card">
+      <i class="fa-solid fa-money-bill-trend-up" style="color: #10b981;"></i>
+      <div class="stat-info">
+        <h3>{{ tongDoanhThu | number }}đ</h3>
+        <span>Doanh thu</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="charts-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <div class="card chart-card">
+      <h4><i class="fa-solid fa-house-circle-check"></i> Tình trạng phòng</h4>
+      <div class="chart-box-main">
+        <canvas baseChart [data]="pieChartData" [type]="'pie'" [options]="pieChartOptions"></canvas>
+      </div>
+    </div>
+
+    <div class="card chart-card">
+      <h4><i class="fa-solid fa-star"></i> Top 5 dịch vụ phổ biến</h4>
+      <div class="chart-box-main">
+        <canvas baseChart [data]="serviceChartData" [type]="'bar'" [options]="horizontalBarOptions"></canvas>
+      </div>
+    </div>
+
+    <div class="card chart-card">
+      <h4>Lượt check-in tuần này</h4>
+      <div class="chart-box-main">
+        <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'"></canvas>
+      </div>
+    </div>
+
+    <div class="card chart-card">
+      <h4>Xu hướng doanh thu tuần này</h4>
+      <div class="chart-box-main">
+        <canvas baseChart [data]="lineChartData" [options]="barChartOptions" [type]="'line'"></canvas>
+      </div>
+    </div>
+  </div>
+</div>

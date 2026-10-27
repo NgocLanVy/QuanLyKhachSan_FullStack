@@ -1,0 +1,67 @@
+<div class="booking-wrapper" *ngIf="!loading && room">
+  <div class="container">
+    <h1 class="page-title">Xác nhận <em>Đặt phòng</em></h1>
+
+    <div class="booking-grid">
+      <div class="booking-form">
+        <div class="form-section">
+          <h3><i class="fa-solid fa-user-tag"></i> Thông tin khách hàng</h3>
+          <div class="input-group">
+            <label>Họ và tên</label>
+            <input type="text" [(ngModel)]="bookingData.customerName" placeholder="Ví dụ: Nguyễn Văn A">
+          </div>
+          <div class="input-group">
+            <label>Số điện thoại</label>
+            <input type="tel" [(ngModel)]="bookingData.customerPhone" placeholder="090x xxx xxx">
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3><i class="fa-solid fa-calendar-days"></i> Thời gian lưu trú</h3>
+          <div class="date-row">
+            <div class="input-group">
+              <label>Ngày nhận phòng</label>
+              <input type="date" [(ngModel)]="bookingData.checkInDate" (change)="calculateTotal()">
+            </div>
+            <div class="input-group">
+              <label>Ngày trả phòng</label>
+              <input type="date" [(ngModel)]="bookingData.checkOutDate" (change)="calculateTotal()">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-summary">
+        <div class="summary-card">
+          <img [src]="roomImageUrl" class="summary-img" alt="Room Thumbnail">
+          
+          <div class="summary-content">
+            <h4>Phòng {{ room.roomNumber }}</h4>
+            <p class="type">{{ room.roomType.typeName }}</p>
+            
+            <hr>
+            
+            <div class="price-row">
+              <span>Đơn giá:</span>
+              <span>{{ formatPrice(room.roomType.pricePerNight) }}/đêm</span>
+            </div>
+            
+            <div class="total-row">
+              <span>TỔNG CỘNG:</span>
+              <span class="final-price">{{ formatPrice(bookingData.totalAmount) }}</span>
+            </div>
+
+            <button class="btn-confirm" (click)="submitBooking()" [disabled]="bookingData.totalAmount <= 0">
+              XÁC NHẬN THANH TOÁN
+            </button>
+            <p class="note">* Thanh toán trực tiếp tại quầy khi nhận phòng</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="loading" class="loader-container">
+  <div class="loader"></div>
+</div>

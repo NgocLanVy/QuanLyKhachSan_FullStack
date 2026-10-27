@@ -1,0 +1,157 @@
+<div class="booking-container">
+  <div class="booking-header">
+    <div class="header-info">
+      <h2><i class="fa-solid fa-hotel"></i> QUẢN LÝ ĐẶT PHÒNG</h2>
+      <p>Hệ thống vận hành phòng và dịch vụ thời gian thực</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn-refresh" (click)="loadAllData()" [class.spinning]="isLoading">
+        <i class="fa-solid fa-rotate"></i>
+      </button>
+      <button class="btn-primary" (click)="openModal()">
+        <i class="fa-solid fa-plus-circle"></i> ĐÓN KHÁCH MỚI
+      </button>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon st-in"><i class="fa-solid fa-door-open"></i></div>
+      <div class="stat-content">
+        <span class="stat-label">Đang ở</span>
+        <span class="stat-value">{{ stats?.occupiedRooms || 0 }}</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon st-room"><i class="fa-solid fa-bed"></i></div>
+      <div class="stat-content">
+        <span class="stat-label">Phòng trống</span>
+        <span class="stat-value">{{ stats?.availableRooms || 0 }}</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon st-cleaning"><i class="fa-solid fa-broom"></i></div>
+      <div class="stat-content">
+        <span class="stat-label">Đang dọn</span>
+        <span class="stat-value">{{ stats?.cleaningRooms || 0 }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-container shadow-sm">
+    <table class="slate-table">
+      <thead>
+        <tr>
+          <th>MÃ ĐƠN</th>
+          <th>PHÒNG</th>
+          <th>KHÁCH HÀNG</th>
+          <th>GIỜ VÀO</th>
+          <th>TRẠNG THÁI</th>
+          <th class="text-right">TẠM TÍNH</th>
+          <th class="text-center">THAO TÁC</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="isLoading && listBookings.length === 0">
+          <td colspan="7" class="loading-cell">
+            <div class="spinner"></div> Đang tải dữ liệu...
+          </td>
+        </tr>
+        <tr *ngFor="let b of listBookings">
+          <td class="bold-text">#{{ b.bookingId || b.bookingID }}</td>
+          <td><span class="room-tag">{{ b.room?.roomNumber }}</span></td>
+          <td>
+            <div class="cust-wrapper">
+              <span class="cust-name">{{ b.customer?.fullName || 'Khách vãng lai' }}</span>
+              <span class="cust-sub"><i class="fa-solid fa-phone"></i> {{ b.customer?.phoneNumber || 'N/A' }}</span>
+            </div>
+          </td>
+          <td class="time-cell">{{ b.checkInTime | date:'dd/MM HH:mm' }}</td>
+          <td>
+            <span [class]="'badge-status ' + (b.status.toLowerCase() || '')">
+              {{ b.status }}
+            </span>
+          </td>
+          <td class="price-cell text-right">{{ getFinalTotal(b) | number }}đ</td>
+          <td class="text-center">
+            <div class="action-btns">
+              <button class="btn-act btn-srv" (click)="openServiceModal(b)" title="Thêm dịch vụ">
+                <i class="fa-solid fa-utensils"></i>
+              </button>
+              <button class="btn-act btn-out" (click)="viewBill(b)" title="Thanh toán">
+                <i class="fa-solid fa-cash-register"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal-overlay" *ngIf="showQuickBookingModal">
+    <div class="modal-content slate-modal">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-bolt"></i> CHECK-IN NHANH</h3>
+        <button class="close-btn" (click)="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Chọn phòng trống</label>
+          <select [(ngModel)]="selectedRoomId" class="form-control">
+            <option [value]="0">-- Chọn phòng sạch --</option>
+            <option *ngFor="let room of availableRooms" [value]="room.roomID">
+              P.{{ room.roomNumber }} - {{ room.roomType?.roomTypeName }}
+            </option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tên khách hàng</label>
+            <input type="text" [(ngModel)]="customerName" class="form-control" placeholder="Họ tên">
+          </div>
+          <div class="form-group">
+            <label>Số điện thoại</label>
+            <input type="text" [(ngModel)]="phone" class="form-control" placeholder="SĐT">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" (click)="closeModal()">HỦY</button>
+        <button class="btn-confirm" (click)="confirmQuickCheckIn()">XÁC NHẬN ĐẶT</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="showServiceModal">
+    <div class="modal-content slate-modal">
+      <div class="modal-header" style="background: #0f172a;">
+        <h3><i class="fa-solid fa-cart-plus"></i> THÊM DỊCH VỤ</h3>
+        <button class="close-btn" (click)="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 15px;">
+          Chọn số lượng các món khách đã sử dụng:
+        </p>
+        <div class="service-list-container">
+          <div class="service-item" *ngFor="let s of servicesList">
+            <div class="service-info">
+              <span class="service-name">{{ s.serviceName }}</span>
+              <span class="service-price">{{ s.price | number }}đ</span>
+            </div>
+            <div class="qty-control">
+              <button type="button" class="btn-qty" (click)="changeQtyInList(s, -1)">-</button>
+              <input type="text" class="qty-input-small" [ngModel]="s.quantity_temp || 0" readonly>
+              <button type="button" class="btn-qty" (click)="changeQtyInList(s, 1)">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" (click)="closeModal()">ĐÓNG</button>
+        <button class="btn-srv-confirm" (click)="confirmOrderService()">XÁC NHẬN & THÊM</button>
+      </div>
+    </div>
+  </div>
+
+  <app-bill-modal *ngIf="showBillModal" [bookingData]="selectedBooking" (close)="showBillModal = false" (confirmCheckout)="handleCheckOut($event)"></app-bill-modal>
+</div>
